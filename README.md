@@ -12,7 +12,7 @@ A complete machine learning workflow demonstration using Databricks Feature Stor
 
 2. **Upload to Databricks Workspace**
    - Import notebooks from the `notebooks/` folder
-   - Upload CSV files from the `data/` folder to DBFS
+   - Upload CSV files from the `data/` folder to Unity Catalog Volume: `/Volumes/workspace/prediction/customer_product/`
 
 3. **Run notebooks in sequence**
    - Execute `01_feature_table_creation.py`
@@ -67,11 +67,16 @@ Ensure all CSV files in the `data/` folder contain the following structure:
 ## 🔧 Setup Instructions
 
 ### Step 1: Data Upload
-1. Upload all CSV files from `data/` folder to DBFS:
+1. Upload all CSV files from `data/` folder to Unity Catalog Volume:
    ```python
    # In Databricks notebook
-   dbutils.fs.cp("file:/path/to/local/file.csv", "dbfs:/FileStore/shared_uploads/data/file.csv")
+   dbutils.fs.cp("file:/path/to/local/file.csv", "/Volumes/workspace/prediction/customer_product/file.csv")
    ```
+   
+   Or using the Databricks UI:
+   - Navigate to **Catalog Explorer**
+   - Go to `workspace` → `prediction` → `customer_product` volume
+   - Upload CSV files directly through the UI
 
 ### Step 2: Feature Table Creation
 1. Open `01_feature_table_creation.py` in Databricks
@@ -168,6 +173,7 @@ After completing this POC, consider:
 - **Schema Errors**: Check CSV files match expected column names and types
 
 ### Resources
+- [Unity Catalog Volumes Documentation](https://docs.databricks.com/en/connect/unity-catalog/volumes.html)
 - [Databricks Feature Store Documentation](https://docs.databricks.com/en/machine-learning/feature-store/index.html)
 - [MLflow Model Registry Guide](https://docs.databricks.com/en/mlflow/model-registry.html)
 - [CatBoost Documentation](https://catboost.ai/en/docs/)
